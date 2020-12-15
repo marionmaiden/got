@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Game of Three</title>
+        <link rel="icon" href="data:,">
+        <link href="bootstrap.min.css" rel="stylesheet">
+        <link href="main.css" rel="stylesheet">
+        <script src="jquery.min.js"></script>
+        <script src="sockjs.min.js"></script>
+        <script src="stomp.min.js"></script>
+        <script src="app.js"></script>
+    </head>
+
+    <body onload="init()">
+
+        <div class="container">
+
+            <!-- Title -->
+            <div class="row">
+                <h1>Game of Three</h1>
+            </div>
+
+            <br/>
+
+            <!-- Alert that displays if it is player 1 or 2 -->
+            <div class="row" id="playerAlert">
+            </div>
+
+            <br/>
+
+            <!-- UI for player 1 to set initial value -->
+            <div class="row" id="setIniValue" style="display:none">
+                <div class="col-md-5">
+                    <h6>Please select your value (greater than 1)</h6>
+                </div>
+                <div class="col-md-5">
+                    <input type="number" id="init_value">
+                </div>
+                <div class="col-md-2">
+                    <button id="startButton" class="btn btn-primary" onclick="doStart()" disabled>Start</button>
+                </div>
+            </div>
+
+            <!-- UI for player 1 or 2 to wait for opponent's move -->
+            <div class="row" id="waitPlayer" style="display:none">
+                <div class="col-md-12">
+                    <h2>Waiting for opponent's move</h2> <br/>
+                    <label id="waiting_value"></label>
+                </div>
+            </div>
+
+            <!-- UI for player 1 or 2 to play current turn -->
+            <div class="row" id="yourTurn" style="display:none">
+                <div class="col-md-12">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <h2>Please do your move</h2>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-6">
+                            <label id="turn_value"></label>
+                        </div>
+                        <div class="col-md-6">
+                            <button class="btn btn-primary" onclick="doPlay(1)">+1</button>
+                            <button class="btn btn-primary" onclick="doPlay(0)">0</button>
+                            <button class="btn btn-primary" onclick="doPlay(-1)">-1</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Displays message for winner -->
+            <div class="row" id="youWon" style="display:none">
+                <div class="col-md-12">
+                    <h2 class="text-center">YOU WON!</h2>
+                </div>
+            </div>
+
+            <!-- Displays message for loser -->
+            <div class="row" id="youLost" style="display:none">
+                <div class="col-md-12">
+                    <h2 class="text-center">YOU LOST!</h2>
+                </div>
+            </div>
+
+            <br/>
+
+            <!-- Table with previous moves -->
+            <div class="row">
+                <div class="col-md-12">
+                    <table id="movesTable" class="table table-striped">
+                        <thead>
+                            <tr>
+                                <th>Player</th>
+                                <th>Operation</th>
+                                <th>Value</th>
+                            </tr>
+                        </thead>
+                        <tbody id="moves">
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </body>
+</html>

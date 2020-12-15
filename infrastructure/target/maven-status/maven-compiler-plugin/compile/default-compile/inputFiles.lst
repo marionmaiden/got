@@ -1,0 +1,5 @@
+/home/mario/targomo/gameofthree/infrastructure/src/main/java/com/mhgf/endpoint/config/WebSocketConfig.java
+/home/mario/targomo/gameofthree/infrastructure/src/main/java/com/mhgf/endpoint/controller/PlayerController.java
+/home/mario/targomo/gameofthree/infrastructure/src/main/java/com/mhgf/endpoint/controller/GameController.java
+/home/mario/targomo/gameofthree/infrastructure/src/main/java/com/mhgf/endpoint/model/HelloMessage.java
+/home/mario/targomo/gameofthree/infrastructure/src/main/java/com/mhgf/endpoint/model/Greeting.java

@@ -1,0 +1,9 @@
+/home/mario/targomo/gameofthree/domain/src/main/java/com/mhgf/domain/aggregate/TurnRequest.java
+/home/mario/targomo/gameofthree/domain/src/main/java/com/mhgf/domain/valueobject/Operations.java
+/home/mario/targomo/gameofthree/domain/src/main/java/com/mhgf/domain/aggregate/TurnResponse.java
+/home/mario/targomo/gameofthree/domain/src/main/java/com/mhgf/domain/service/GameLogic.java
+/home/mario/targomo/gameofthree/domain/src/main/java/com/mhgf/domain/aggregate/PlayerResponse.java
+/home/mario/targomo/gameofthree/domain/src/main/java/com/mhgf/domain/entity/Player.java
+/home/mario/targomo/gameofthree/domain/src/main/java/com/mhgf/domain/entity/Game.java
+/home/mario/targomo/gameofthree/domain/src/main/java/com/mhgf/domain/repository/PlayersPoll.java
+/home/mario/targomo/gameofthree/domain/src/main/java/com/mhgf/domain/repository/GameMap.java
