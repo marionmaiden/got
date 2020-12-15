@@ -14,7 +14,6 @@ import java.util.UUID;
 @Getter
 public class TurnRequest {
     private UUID playerId;
-    private UUID gameId;
     private Integer value;
 
 }

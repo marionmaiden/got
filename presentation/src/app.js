@@ -10,7 +10,7 @@ function connectWebSocket() {
     var socket = new SockJS('/ws');
     stompClient = Stomp.over(socket);
     stompClient.connect({}, function (frame) {
-        stompClient.subscribe('/response/turn', function (move) {
+        stompClient.subscribe('/response/turn/' + gameId, function (move) {
             showMove(JSON.parse(move.body));
         });
     });
@@ -74,13 +74,13 @@ function doPlay(operation) {
         "value": operation
     }
 
-    stompClient.send("/request/turn", {}, JSON.stringify(request));
+    stompClient.send("/request/turn/" + gameId, {}, JSON.stringify(request));
 }
 
 // On every game turn response, populate the moves table and display if player won or lost game
 function showMove(move) {
     // Ignore any message missing operation and resultingValue
-    if (gameId != move.gameId || (move.operation === null && move.resultingValue === 0))
+    if (move.operation === null && move.resultingValue === 0)
         return
 
     if ((!move.player1 && isPlayer1) || (move.player1 && !isPlayer1)) {

@@ -27,7 +27,7 @@ public class GameTest {
     public void testPlayWrongUser() {
         Game g = new Game(new Player(true));
         // Turn request with random player id (it will assume the wrong player is playing)
-        TurnRequest request = new TurnRequest(UUID.randomUUID(), g.getId(), 56);
+        TurnRequest request = new TurnRequest(UUID.randomUUID(), 56);
 
         assertThatThrownBy(() -> {
             g.play(request);
@@ -40,7 +40,7 @@ public class GameTest {
     public void testPlay() {
         Player p = new Player(true);
         Game g = new Game(p);
-        TurnRequest request = new TurnRequest(p.getId(), g.getId(), 56);
+        TurnRequest request = new TurnRequest(p.getId(), 56);
 
         TurnResponse response = g.play(request);
         assertThat(response.isPlayer1()).isTrue();
@@ -54,14 +54,14 @@ public class GameTest {
     public void testPlayWithOnePlayer() {
         Player p = new Player(true);
         Game g = new Game(p);
-        TurnRequest request = new TurnRequest(p.getId(), g.getId(), 56);
+        TurnRequest request = new TurnRequest(p.getId(), 56);
 
         // First move
         TurnResponse response = g.play(request);
 
         // Second move
         assertThatThrownBy(() -> {
-            TurnRequest request2 = new TurnRequest(p.getId(), g.getId(), 1);
+            TurnRequest request2 = new TurnRequest(p.getId(), 1);
             g.play(request2);
         })
                 .isInstanceOf(RuntimeException.class)
@@ -85,14 +85,14 @@ public class GameTest {
         Player p2 = new Player(false);
         Game g = new Game(p);
 
-        TurnRequest request = new TurnRequest(p.getId(), g.getId(), 56);
+        TurnRequest request = new TurnRequest(p.getId(), 56);
 
         // First move
         TurnResponse response = g.play(request);
         g.setPlayer2(p2);
 
         // Second move
-        request = new TurnRequest(p2.getId(), g.getId(), 1);
+        request = new TurnRequest(p2.getId(), 1);
         response = g.play(request);
         assertThat(response.getResultingValue()).isEqualTo(19);
         assertThat(response.isWon()).isFalse();
@@ -106,14 +106,14 @@ public class GameTest {
         Player p2 = new Player(false);
         Game g = new Game(p);
 
-        TurnRequest request = new TurnRequest(p.getId(), g.getId(), 56);
+        TurnRequest request = new TurnRequest(p.getId(), 56);
 
         // First move
         TurnResponse response = g.play(request);
         g.setPlayer2(p2);
 
         // Second move
-        request = new TurnRequest(p.getId(), g.getId(), 1);
+        request = new TurnRequest(p.getId(), 1);
         response = g.play(request);
         assertThat(response.getResultingValue()).isEqualTo(0);
         assertThat(response.isWon()).isFalse();
