@@ -20,6 +20,7 @@ public class Game {
     private UUID id;
     private Map<UUID,Player> players;
     private GameLogic logic;
+    // Controls if it is player's 1 turn
     private boolean player1 = true;
 
     /**
@@ -38,16 +39,11 @@ public class Game {
      * @param p2
      */
     public void setPlayer2(Player p2) {
+        if (p2.isPlayer1())
+            throw new RuntimeException("Player 2 is assigned as Player 1");
         players.put(p2.getId(), p2);
     }
 
-    /**
-     * Check if both players have been assigned
-     * @return
-     */
-    private boolean hasPlayers() {
-        return players.size() == 2;
-    }
 
     /**
      * Start a game from a turn request
@@ -58,7 +54,7 @@ public class Game {
      */
     private TurnResponse start(TurnRequest turn) {
         logic = new GameLogic(turn.getValue());
-        return new TurnResponse(null, turn.getValue(), player1, logic.didWin());
+        return new TurnResponse(null, turn.getValue(), player1, id, logic.didWin());
     }
 
     /**
@@ -68,6 +64,9 @@ public class Game {
      * @return
      */
     public TurnResponse play(TurnRequest turn) {
+        // If the player trying to play is not in current turn, returns an empty response
+        // Yeah, I know I could have done it better as a custom or error response but I didn't want spend too much time
+        // on it
         if (!checkPlayer(turn.getPlayerId()))
             return new TurnResponse();
 
@@ -76,10 +75,9 @@ public class Game {
         if (logic == null)
            response = start(turn);
         else {
-            if (!hasPlayers())
-                throw new RuntimeException("Trying to start a game without all players!");
-
-            response = logic.turn(Operations.fromValue(turn.getValue()), player1);
+            response = logic.turn(Operations.fromValue(turn.getValue()));
+            response.setPlayer1(player1);
+            response.setGameId(id);
         }
 
         // Before ending, change the player's turn
@@ -93,8 +91,26 @@ public class Game {
      * @return
      */
     private boolean checkPlayer(UUID playerUUID) {
+        if (logic != null && players.size() < 2)
+            throw new RuntimeException("The game requires two players to proceed");
+
+        else if (!players.containsKey(playerUUID))
+            throw new RuntimeException("Player not found in game");
+
         return (player1 && players.get(playerUUID).isPlayer1()) ||
                 (!player1 && !players.get(playerUUID).isPlayer1());
+    }
+
+    /**
+     * Return the value if already assigned
+     * This is used mainly when player 1 starts the game but there isn't a player 2 yet
+     * Player 2 when created needs to know which value was assigned by player 1
+     * @return
+     */
+    public Integer getValue() {
+        if (logic == null)
+            return null;
+        return logic.getValue();
     }
 
 }

@@ -1,4 +1,5 @@
 let stompClient = null;
+let initValue = null;
 let playerId = null;
 let gameId = null;
 let isPlayer1 = false;
@@ -25,9 +26,10 @@ function registerPlayer(){
     playerId = response.playerId;
     gameId = response.gameId;
     isPlayer1 = response.player1;
+    initValue = response.initValue;
 }
 
-// Disconnect websocked
+// Disconnect websocket
 function disconnectWebSocket() {
     if (stompClient !== null)
         stompClient.disconnect();
@@ -48,6 +50,11 @@ function init() {
         $("#playerAlert").append(alertTxt + "Playing as Player 1 - Game Id: " + gameId + "</div>")
     }
     else {
+        if (initValue != null){
+            $("#yourTurn").show();
+            $("#turn_value").text(initValue);
+        }
+
         $("#playerAlert").append(alertTxt + "Playing as Player 2 - Game Id: " + gameId + "</div>")
     }
     connectWebSocket();
@@ -73,7 +80,7 @@ function doPlay(operation) {
 // On every game turn response, populate the moves table and display if player won or lost game
 function showMove(move) {
     // Ignore any message missing operation and resultingValue
-    if (move.operation === null && move.resultingValue === 0)
+    if (gameId != move.gameId || (move.operation === null && move.resultingValue === 0))
         return
 
     if ((!move.player1 && isPlayer1) || (move.player1 && !isPlayer1)) {

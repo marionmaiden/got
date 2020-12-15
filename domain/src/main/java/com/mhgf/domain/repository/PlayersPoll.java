@@ -21,14 +21,7 @@ public class PlayersPoll {
     private GameMap gameMap;
 
     // Games waiting for player 2
-    ConcurrentLinkedQueue<Game> pendingGames;
-
-    /**
-     * Constructor
-     */
-    public PlayersPoll() {
-        pendingGames = new ConcurrentLinkedQueue<>();
-    }
+    ConcurrentLinkedQueue<Game> pendingGames = new ConcurrentLinkedQueue<>();
 
     /**
      * Add a player
@@ -57,7 +50,7 @@ public class PlayersPoll {
             isPlayer1 = false;
         }
 
-        return new PlayerResponse(player.getId(), game.getId(), isPlayer1);
+        return new PlayerResponse(player.getId(), game.getId(), isPlayer1, game.getValue());
     }
 
 }

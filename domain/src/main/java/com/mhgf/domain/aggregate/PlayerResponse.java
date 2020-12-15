@@ -18,5 +18,6 @@ public class PlayerResponse {
     private UUID playerId;
     private UUID gameId;
     private boolean isPlayer1;
+    private Integer initValue;
 
 }

@@ -1,7 +1,7 @@
 package com.mhgf.endpoint.controller;
 
-import com.mhgf.domain.repository.PlayersPoll;
 import com.mhgf.domain.aggregate.PlayerResponse;
+import com.mhgf.domain.repository.PlayersPoll;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.GetMapping;

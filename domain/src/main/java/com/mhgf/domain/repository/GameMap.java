@@ -1,9 +1,6 @@
 package com.mhgf.domain.repository;
 
-import com.mhgf.domain.aggregate.TurnRequest;
-import com.mhgf.domain.aggregate.TurnResponse;
 import com.mhgf.domain.entity.Game;
-import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
 
 import java.util.HashMap;
@@ -18,22 +15,17 @@ import java.util.UUID;
 public class GameMap {
 
     // HashMap containing games. Retrieved by Game Id
-    HashMap<UUID, Game> gameMap = new HashMap<>();
+    // Ps.: I'm not removing the finished games from the map at runtime to make the project simpler
+    private HashMap<UUID, Game> gameMap = new HashMap<>();
 
     /**
      * Simply add a game to map
      * @param game
      */
     public void addGame(Game game) {
+        if (game == null || game.getId() == null)
+            throw new RuntimeException("Trying to add an invalid Game. Please check content.");
         gameMap.put(game.getId(), game);
-    }
-
-    /**
-     * End a game by removing it from the map
-     * @param uuid
-     */
-    private void endGame(UUID uuid) {
-        gameMap.remove(uuid);
     }
 
     /**

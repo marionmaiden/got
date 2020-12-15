@@ -4,8 +4,6 @@ import com.mhgf.domain.aggregate.TurnResponse;
 import com.mhgf.domain.valueobject.Operations;
 import lombok.Data;
 
-import java.util.UUID;
-
 /**
  * This class represents the game logic
  * It is not aware of who is playing, that's managed by Game class
@@ -14,7 +12,6 @@ import java.util.UUID;
 @Data
 public class GameLogic {
 
-    private UUID id;
     private int value;
 
     /**
@@ -35,13 +32,13 @@ public class GameLogic {
      * @param op
      * @return
      */
-    public TurnResponse turn(Operations op, boolean isPlayer1) {
+    public TurnResponse turn(Operations op) {
         value+= op.getOpValue();
 
         if (value %3 == 0)
             value/= 3;
 
-        return new TurnResponse(op, value, isPlayer1, didWin());
+        return new TurnResponse(op, value, didWin());
     }
 
     /**
